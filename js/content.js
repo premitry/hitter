@@ -70,6 +70,26 @@
     };
   }
 
+  function detectPageEmail() {
+    const selectors = [
+      'input[type="email"]',
+      'input[autocomplete="email"]',
+      'input[name*="email" i]',
+      'input[id*="email" i]'
+    ];
+    const seen = new WeakSet();
+    for (const sel of selectors) {
+      const els = document.querySelectorAll(sel);
+      for (const el of els) {
+        if (seen.has(el)) continue;
+        seen.add(el);
+        const v = (el.value || "").trim();
+        if (v && v.includes("@")) return v;
+      }
+    }
+    return "";
+  }
+
   function emailToName(email) {
     const [localRaw = "", domainRaw = ""] = String(email).split("@");
     const local = localRaw.replace(/[^A-Za-z0-9]/g, "");
@@ -277,14 +297,21 @@
     return filled;
   }
 
-  window.__autofill = function (email, locale) {
+  window.__autofill = function (fallbackEmail, locale) {
     try {
+      const detected = detectPageEmail();
+      const email = detected || (fallbackEmail || "").trim();
+      if (!email || !email.includes("@")) {
+        const addr = generateAddress(locale);
+        const filled = fillFields({ first: "", last: "", full: "", handle: "" }, addr);
+        return { filled, source: "none" };
+      }
       const name = emailToName(email);
       const addr = generateAddress(locale);
       const filled = fillFields(name, addr);
-      return { filled };
+      return { filled, source: detected ? "page" : "popup", email };
     } catch (e) {
-      return { filled: 0, error: String(e && e.message || e) };
+      return { filled: 0, error: String((e && e.message) || e) };
     }
   };
 })();

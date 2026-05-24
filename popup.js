@@ -24,8 +24,8 @@ async function runFill() {
   const email = $("email").value.trim();
   const locale = $("locale").value;
 
-  if (!email || !email.includes("@")) {
-    setStatus("Enter a valid email first.", "err");
+  if (email && !email.includes("@")) {
+    setStatus("Email format invalid.", "err");
     return;
   }
 
@@ -51,12 +51,19 @@ async function runFill() {
     });
 
     const filled = results.reduce((sum, r) => sum + (r?.result?.filled || 0), 0);
-    setStatus(
-      filled
-        ? `Filled ${filled} field${filled === 1 ? "" : "s"}.`
-        : "No matching fields found on this page.",
-      filled ? "ok" : "err"
-    );
+    const source = results.map((r) => r?.result?.source).find((s) => s === "page" || s === "popup");
+
+    let msg;
+    if (!filled) {
+      msg = "No matching fields found on this page.";
+    } else if (source === "page") {
+      msg = `Filled ${filled} field${filled === 1 ? "" : "s"} (email from page).`;
+    } else if (source === "popup") {
+      msg = `Filled ${filled} field${filled === 1 ? "" : "s"} (email from popup).`;
+    } else {
+      msg = `Filled ${filled} field${filled === 1 ? "" : "s"} (no email; name skipped).`;
+    }
+    setStatus(msg, filled ? "ok" : "err");
   } catch (e) {
     setStatus("Failed: " + (e?.message || String(e)), "err");
   } finally {
