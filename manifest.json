@@ -1,111 +1,16 @@
 {
   "manifest_version": 3,
-  "name": "OrangLemah",
-  "version": "2.1.3",
-  "description": "Stripe checkout autopilot from a glassmorphic popup.",
-  "permissions": [
-    "proxy",
-    "storage",
-    "activeTab",
-    "scripting",
-    "webRequest",
-    "webRequestAuthProvider",
-    "notifications",
-    "tabs",
-    "downloads",
-    "webNavigation",
-    "offscreen",
-    "declarativeNetRequest",
-    "declarativeNetRequestWithHostAccess"
-  ],
-  "host_permissions": [
-    "https://*.stripe.com/*",
-    "https://api.telegram.org/*",
-    "https://ipapi.co/*",
-    "http://ip-api.com/*",
-    "http://localhost:3000/",
-    "<all_urls>"
-  ],
+  "name": "Form Autofill Helper",
+  "version": "1.0.0",
+  "description": "Fills name and address fields on the active tab using a user-provided email and locale.",
   "icons": {
     "16": "icons/icon16.png",
     "64": "icons/icon64.png",
     "128": "icons/icon128.png"
   },
   "action": {
-    "default_icon": {
-      "16": "icons/icon16.png",
-      "64": "icons/icon64.png",
-      "128": "icons/icon128.png"
-    },
-    "default_popup": "popup.html"
+    "default_popup": "popup.html",
+    "default_title": "Form Autofill"
   },
-  "background": {
-    "service_worker": "js/background.js"
-  },
-  "content_scripts": [
-    {
-      "matches": [
-        "https://*.stripe.com/*",
-        "*://*/*cs_live_*",
-        "*://*/*checkout/*"
-      ],
-      "exclude_matches": [
-        "https://m.stripe.com/*",
-        "https://r.stripe.com/*",
-        "https://q.stripe.com/*",
-        "https://js.stripe.com/*",
-        "https://b.stripecdn.com/*",
-        "https://merchant-log-api.stripe.com/*"
-      ],
-      "js": [
-        "js/stealth.js"
-      ],
-      "world": "MAIN",
-      "run_at": "document_start",
-      "all_frames": true
-    },
-    {
-      "matches": [
-        "https://*.stripe.com/*",
-        "*://*/*cs_live_*",
-        "*://*/*checkout/*"
-      ],
-      "js": [
-        "js/content.js"
-      ]
-    },
-    {
-      "matches": [
-        "*://*.hcaptcha.com/*",
-        "*://*.hcaptcha.com/*checkbox*",
-        "*://*.hcaptcha.com/*challenge*"
-      ],
-      "js": [
-        "js/hcaptcha-handler.js"
-      ],
-      "all_frames": true,
-      "run_at": "document_end"
-    }
-  ],
-  "web_accessible_resources": [
-    {
-      "resources": [
-        "js/injected.js",
-        "js/interceptor.js",
-        "js/offscreen.js",
-        "offscreen.html",
-        "icons/icon16.png",
-        "icons/icon64.png",
-        "icons/icon128.png",
-        "hit.wav",
-        "icons/success.png",
-        "icons/bg.jpg",
-        "icons/toggle.png",
-        "icons/gojo-stand.png"
-      ],
-      "matches": [
-        "<all_urls>"
-      ]
-    }
-  ]
+  "permissions": ["activeTab", "scripting", "storage"]
 }
