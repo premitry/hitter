@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OrangLemah</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+  <div class="app-container">
+    <nav class="sidebar">
+      <div class="brand">
+        <img src="icons/icon64.png" class="brand-logo-img" alt="Logo">
+      </div>
+      <ul class="nav">
+        <li class="nav-item active" data-tab="tab-home" title="Home">
+          <span class="icon">🏠</span>
+        </li>
+        <li class="nav-item" data-tab="tab-integrations" title="Integrations">
+          <span class="icon">🔗</span>
+        </li>
+        <li class="nav-item" data-tab="tab-hits" title="History">
+          <span class="icon">📋</span>
+        </li>
+        <li class="nav-item" data-tab="tab-proxies" title="Proxies">
+          <span class="icon">🌐</span>
+        </li>
+        <li class="nav-item" data-tab="tab-gallery" title="Gallery">
+          <span class="icon">🖼️</span>
+        </li>
+      </ul>
+      <div class="sidebar-footer">
+        <a href="https://t.me/sambat1234" target="_blank" class="nav-item telegram-link" title="Telegram">
+          <span class="icon">✈️</span>
+        </a>
+        <div class="status-dot" id="statusDot"></div>
+        <div class="sidebar-version">v2.1.2</div>
+      </div>
+    </nav>
+
+    <main class="content">
+
+      <!-- HOME TAB -->
+      <section id="tab-home" class="tab-pane active fade-in">
+        <header class="tab-header">
+          <h1>Dashboard</h1>
+          <span class="status-badge" id="statusText">Ready</span>
+        </header>
+
+        <!-- STAT CARDS -->
+        <div class="stat-row">
+          <div class="stat-card">
+            <div class="stat-value cyan" id="stat-hits">0</div>
+            <div class="stat-label">Hits</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value red" id="stat-fails">0</div>
+            <div class="stat-label">Fails</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value white" id="stat-attempts">0</div>
+            <div class="stat-label">Attempts</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value green" id="stat-rate">0%</div>
+            <div class="stat-label">Rate</div>
+          </div>
+        </div>
+
+        <div class="card glass-panel last-hit">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <h3>Last Hit</h3>
+            <button class="btn-reset-stats" id="resetStatsBtn" title="Reset all stats">Reset</button>
+          </div>
+          <div class="lh-grid">
+            <div class="lh-item">
+              <label>CARD</label>
+              <div class="mono" id="lh-card">—</div>
+            </div>
+            <div class="lh-item">
+              <label>EXP / CVV</label>
+              <div class="mono" id="lh-exp">—</div>
+            </div>
+            <div class="lh-item">
+              <label>SITE</label>
+              <div id="lh-site">—</div>
+            </div>
+            <div class="lh-item">
+              <label>TIME</label>
+              <div id="lh-time">—</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- INTEGRATIONS TAB -->
+      <section id="tab-integrations" class="tab-pane fade-in">
+        <header class="tab-header">
+          <h1>Integrations</h1>
+          <button id="saveIntegrationsBtn" class="btn-primary">Save all</button>
+        </header>
+
+        <div class="integration-card">
+          <div class="int-head">
+            <span class="icon">✈️</span> Telegram
+            <label class="toggle-sm">
+              <input type="checkbox" id="telegramEnabled" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div class="field">
+            <label>Bot Token</label>
+            <input type="password" id="botToken" placeholder="123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11">
+          </div>
+          <div class="field">
+            <label>Chat ID</label>
+            <input type="text" id="chatId" placeholder="123456789">
+          </div>
+          <div class="field">
+            <label>Display Name (Optional)</label>
+            <input type="text" id="userName" placeholder="Your Alias">
+          </div>
+          <div class="field-row">
+            <button id="testTelegramBtn" class="btn-sm">Test</button>
+          </div>
+          <div id="telegramHint" class="hint">Buat bot via @BotFather, gunakan /start lalu /id di bot untuk dapat Chat
+            ID</div>
+        </div>
+
+        <div class="integration-card">
+          <div class="int-head">
+            <span class="icon">👾</span> Discord
+            <label class="toggle-sm">
+              <input type="checkbox" id="discordEnabled">
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div class="field">
+            <label>Webhook URL</label>
+            <input type="password" id="discordWebhook" placeholder="https://discord.com/api/webhooks/...">
+          </div>
+          <div class="field-row">
+            <button id="testDiscordBtn" class="btn-sm">Test</button>
+          </div>
+        </div>
+
+        <div class="integration-card">
+          <div class="int-head">
+            <span class="icon">#️⃣</span> Slack
+            <label class="toggle-sm">
+              <input type="checkbox" id="slackEnabled">
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div class="field">
+            <label>Webhook URL</label>
+            <input type="password" id="slackWebhook" placeholder="https://hooks.slack.com/services/...">
+          </div>
+        </div>
+      </section>
+
+      <!-- HITS TAB -->
+      <section id="tab-hits" class="tab-pane fade-in">
+        <header class="tab-header">
+          <h1>History</h1>
+          <button id="clearHitsBtn" class="btn-text">Clear</button>
+        </header>
+        <div class="hits-container" id="hitsList">
+          <div class="empty-msg">No hits yet</div>
+        </div>
+      </section>
+
+      <!-- PROXIES TAB -->
+      <section id="tab-proxies" class="tab-pane fade-in">
+        <header class="tab-header">
+          <h1>Proxies</h1>
+          <button id="saveProxiesBtn" class="btn-primary">Save</button>
+        </header>
+        <div class="proxy-controls">
+          <div style="display:flex;align-items:center;justify-content:space-between;width:100%">
+            <span style="font-size:13px;font-weight:700">Enable Rotation</span>
+            <label class="toggle-sm">
+              <input type="checkbox" id="proxyEnabled">
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div style="margin-top:10px;font-size:11px;color:var(--text-muted)">
+            Active: <span id="proxyCount" class="badge">0</span>
+          </div>
+        </div>
+        <textarea id="proxyList" placeholder="ip:port:user:pass&#10;ip:port"></textarea>
+        <p class="help-text">One per line. HTTP/HTTPS supported.</p>
+      </section>
+
+      <!-- GALLERY TAB -->
+      <section id="tab-gallery" class="tab-pane fade-in">
+        <header class="tab-header">
+          <h1>Gallery</h1>
+          <button id="refreshGalleryBtn" class="btn-icon">↻</button>
+        </header>
+        <div class="gallery-grid" id="galleryGrid">
+          <div class="empty-msg">No screenshots</div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+
+</html>
