@@ -9,8 +9,7 @@
       states: ["DKI Jakarta", "Jawa Barat", "Jawa Timur", "DI Yogyakarta", "Jawa Tengah", "Sumatera Utara", "Sulawesi Selatan"],
       country: "Indonesia",
       countryCode: "ID",
-      zip: () => String(10000 + Math.floor(Math.random() * 89999)),
-      phone: () => "+628" + randomDigits(10)
+      zip: () => String(10000 + Math.floor(Math.random() * 89999))
     },
     US: {
       streets: ["Main St", "Oak Ave", "Pine Rd", "Maple Ln", "Cedar Blvd", "Elm St", "Washington Ave"],
@@ -18,8 +17,7 @@
       states: ["CA", "TX", "NY", "FL", "IL", "PA", "OH"],
       country: "United States",
       countryCode: "US",
-      zip: () => String(10000 + Math.floor(Math.random() * 89999)),
-      phone: () => "+1" + randomDigits(10)
+      zip: () => String(10000 + Math.floor(Math.random() * 89999))
     },
     GB: {
       streets: ["High St", "Church Rd", "Mill Ln", "Park Ave", "Queen St", "Station Rd"],
@@ -31,8 +29,7 @@
         const a = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         const r = (s) => s[Math.floor(Math.random() * s.length)];
         return `${r(a)}${r(a)}${1 + Math.floor(Math.random() * 9)} ${Math.floor(Math.random() * 9)}${r(a)}${r(a)}`;
-      },
-      phone: () => "+447" + randomDigits(9)
+      }
     },
     AU: {
       streets: ["George St", "King St", "Queen St", "Pitt St", "Collins St", "Bourke St"],
@@ -40,16 +37,9 @@
       states: ["NSW", "VIC", "QLD", "WA", "SA", "ACT"],
       country: "Australia",
       countryCode: "AU",
-      zip: () => String(1000 + Math.floor(Math.random() * 8999)),
-      phone: () => "+614" + randomDigits(8)
+      zip: () => String(1000 + Math.floor(Math.random() * 8999))
     }
   };
-
-  function randomDigits(n) {
-    let s = "";
-    for (let i = 0; i < n; i++) s += Math.floor(Math.random() * 10);
-    return s;
-  }
 
   function pick(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
@@ -65,8 +55,7 @@
       state: pick(data.states),
       zip: data.zip(),
       country: data.country,
-      countryCode: data.countryCode,
-      phone: data.phone()
+      countryCode: data.countryCode
     };
   }
 
@@ -219,17 +208,6 @@
         ],
         value: addr.country,
         alt: addr.countryCode
-      },
-      {
-        selectors: [
-          'input[autocomplete="tel"]',
-          'input[type="tel"]',
-          'input[name*="phone" i]',
-          'input[name*="mobile" i]',
-          'input[id*="phone" i]',
-          'input[id*="mobile" i]'
-        ],
-        value: addr.phone
       }
     ];
   }
